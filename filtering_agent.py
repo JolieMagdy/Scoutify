@@ -10,7 +10,7 @@ from langgraph.graph import START, END, StateGraph
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_core.documents import Document
 from langchain_core.tools import tool
-
+from typing import TypedDict, Optional
 
 import torch
 from sklearn.metrics.pairwise import cosine_similarity
@@ -30,7 +30,7 @@ class JobRequirements(BaseModel):
     qualifications: List[str]
 
 class ResumeData(BaseModel):
-    name: str
+    name: Optional[str] = None
     skills: List[str]
     experience: List[str]
     education: List[str]
@@ -167,21 +167,25 @@ def run_graph(resume_text: str, job_text: str):
     )
 
 if __name__ == "__main__":
-    # ---------- Batch Processing ----------
     jobs_df = pd.read_csv("C:\\Users\\Julie\\OneDrive\\Desktop\\Scoutify-2\\job_title_des.csv")
     resumes_df = pd.read_csv("C:\\Users\\Julie\\OneDrive\\Desktop\\Scoutify-2\\sampled_resumes.csv")
 
     all_results = []
     for _, rrow in resumes_df.iterrows():
-        resume_text = rrow["Resume"]
+        resume_text = rrow.get("Resume", "")
+        if not isinstance(resume_text, str) or not resume_text.strip():
+            continue
         for _, jrow in jobs_df.iterrows():
-            job_text = jrow["Job Description"]
+            job_text = jrow.get("Job Description", "")
+            if not isinstance(job_text, str) or not job_text.strip():
+                continue
+
             state = run_graph(resume_text, job_text)
             all_results.append({
                 "resume": resume_text[:50] + "...",
-                "job_title": state["job"].title if state.get("job") else jrow.get("Job Title", ""),
-                "score": state["score"],
-                "recommendation": state["recommendation"]
+                "job_title": state.get("job").title if state.get("job") else jrow.get("Job Title", ""),
+                "score": state.get("score", 0.0),
+                "recommendation": state.get("recommendation", "")
             })
 
     # ---------- Save & Query ----------
