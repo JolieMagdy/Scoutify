@@ -15,7 +15,6 @@ from filtering_agent import graph as filtering_graph
 
 
 # Set your OpenAI API Key
-os.environ["OPENAI_API_KEY"] = "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"
 
 # Define app state
 class AppState(TypedDict):
