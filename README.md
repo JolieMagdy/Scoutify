@@ -113,7 +113,7 @@ Designed, implemented, and demoed a fully working system within the 48-hour wind
 
 ## Authors
 
-[Lydia Magdy](https://github.com/JolieMagdy) · and team
+[Jolie Magdy & Lydia Ayyad](https://github.com/JolieMagdy) · and team
 
 ---
 
