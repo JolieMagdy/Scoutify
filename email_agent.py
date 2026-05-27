@@ -14,7 +14,7 @@ SCOPES = [
 ]
 
 flow = InstalledAppFlow.from_client_secrets_file(
-    'C:\\Users\\Julie\\OneDrive\\Desktop\\Lydia\\credentials_2.json',
+    'path',
     SCOPES
 )
 creds = flow.run_local_server(port=0, open_browser=False)
@@ -30,7 +30,7 @@ from langchain_google_community.gmail.send_message import GmailSendMessage
 send_tool = GmailSendMessage(api_resource=toolkit.api_resource)
 
 # response = send_tool.invoke({
-# #     "to": "lydia.salib.06@gmail.com",
+# #     "to": "....",
 # #     "subject": "akheran eshta8al",
 # #     "message": "2adae w lataf"
 # # })
@@ -75,7 +75,7 @@ try:
 except:
     pass
 
-# messages = [HumanMessage(content="Can we send an email lydia.salib.06@gmail.com confirming the meeting tommorow ?")]
+# messages = [HumanMessage(content="Can we send an email confirming the meeting tommorow ?")]
 # initial_state = {"messages": messages}
 
 # new_state = graph.invoke(initial_state)
